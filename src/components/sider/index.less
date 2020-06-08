@@ -2,7 +2,7 @@
     // 广告模块
     .advertising{
         position: relative;
-        margin-bottom: 20px;
+        margin-bottom: 12px;
         img{
             width: 100%;
             border-radius: 2px;
@@ -29,6 +29,7 @@
         width: 100%;
         background: #ffffff;
         border-radius: 2px;
+        margin-bottom: 12px;
         .title{
             font-size: 14px;
             color: #333;
@@ -75,4 +76,83 @@
         }
 
     }
+
+    // 推荐小册
+    .smallVolumes{
+        position: relative;
+        width: 100%;
+        background: #ffffff;
+        border-radius: 2px;
+        margin-bottom: 12px;
+        .title{
+            font-size: 14px;
+            color: #333;
+            font-weight: 400;
+            padding: 12px 16px;
+            border-bottom: 1px solid hsla(0,0%,59.2%,.1);
+        }
+        .all{
+            border-top: 1px solid hsla(0,0%,59.2%,.1);
+            border-bottom: none;
+            text-align: center;
+            color: #007fff;
+        }
+        .lists{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            .item{
+                padding: 12px 16px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                .portrait{
+                    width: 52px;
+                    height: 72px;
+                    border-radius: 4px;
+                    background-size: cover;
+                    flex: 0 auto;
+                }
+                .info{
+                    padding-left: 10px;
+                    flex: 1;
+                    width: 0;
+                    .name{
+                        font-size: 14px;
+                        color: #333;
+                    }
+                    .desc{
+                        font-size: 12px;
+                        color: #909090;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        .buto{
+                            transform:scale(0.8);
+                        }
+                    }
+
+                }
+            }
+            .item:hover{
+                background: #f8f8f8;
+            }
+        }
+
+    }
+
+
+    // 网站底部信息
+    .websiteInfo{
+        font-size: 12px;
+        color: #909090;
+        p{
+            margin: 0;
+        }
+    }
+
+
+
+
+
 }

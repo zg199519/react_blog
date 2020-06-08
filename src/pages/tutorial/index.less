@@ -1,0 +1,64 @@
+.welcomeContext{
+    margin-top: 10px;
+    .content{
+        padding-right: 20px;
+        border-radius: 2px;
+        .main{
+            background: #fff;
+            .volumeList{
+                .item{
+                    padding: 20px;
+                    border-bottom: 1px solid #f0f0f0;
+                    display: flex;
+                    cursor: pointer;
+                    // align-items: baseline;
+                    .theCover{
+                        width: 100px;
+                        height: 120px;
+                        border-radius: 2px;
+                        background-size: cover;
+                        box-shadow: 3px 4px 12px 0 rgba(0,0,0,.2);
+                        overflow: hidden;
+                        flex: 0 auto;
+                    }
+                    .info{
+                        flex: 1 auto;
+                        width: 0;
+                        padding-left: 20px;
+                        .title{
+                            color: #202020;
+                            font-size: 18px;
+                            font-weight: 400;
+                        }
+                        .desc{
+                            color: #71777c;
+                            font-size: 14px;
+                            margin-top: 4px;
+                        }
+                        .author{
+                            display: flex;
+                            align-items: center;
+                            color: #71777c;
+                            font-size: 12px;
+                            margin-top: 4px;
+                            .name{
+                                color: #202020;
+                                margin-left: 4px;
+                                margin-right: 6px;
+                            }
+                        }
+                    }
+                }
+                .item:hover{
+                    background: #f8f8f8;
+                }
+
+            }
+        }
+
+    }
+    .sider{
+        background: #fff;
+    }
+
+}

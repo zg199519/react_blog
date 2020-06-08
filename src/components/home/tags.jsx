@@ -3,6 +3,7 @@ import { Button , Space} from 'antd';
 import TagStyles from './tags.less'
 
 export default class Tags extends React.Component{
+
     state = {
         tags:[
             {name:'全部',value:1},
@@ -28,9 +29,13 @@ export default class Tags extends React.Component{
     }
 
     render(){
+
+        // 标签循环
         let tags = this.state.tags.map((item,index)=>{
            return <Button key={index} shape="round" size="small" className={TagStyles.tag}>{item.name}</Button>
         })
+
+
         return(
             <div>
                 <div className={TagStyles.classification}>
@@ -41,13 +46,20 @@ export default class Tags extends React.Component{
                         <Button type="link" className={TagStyles.button}>运维</Button>
                     </div>
                 </div>
-                <div className="container">
-                    <Space className={TagStyles.lists} size={14}>
-                        {tags}
-                    </Space>
-                </div>
 
+                {
+                    this.props.code
+                    ?
+                        <div className="container">
+                            <Space className={TagStyles.lists} size={14}>
+                                {tags}
+                            </Space>
+                        </div>
+                    :
+                    ''
+                }
             </div>
         )
     }
+
 }

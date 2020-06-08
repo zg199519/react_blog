@@ -1,0 +1,144 @@
+.story{
+    display: flex;
+    margin-top: 20px;
+    .divider{
+        margin: 10px 0;
+    }
+    .navigation{
+        flex: 0 auto;
+        width: 110px;
+        background: #ffffff;
+        padding: 16px 12px;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+        height: min-content;
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li{
+                color: #909090;
+                font-size: 14px;
+                border-radius: 4px;
+                text-align: center;
+                height: 32px;
+                line-height: 32px;
+                cursor: pointer;
+            }
+            li:hover{
+                color: #007fff;
+                background-color: hsla(0,0%,94.9%,.6);
+            }
+        }
+    }
+    .stream{
+        flex: 1 auto;
+        width: 0;
+        padding: 0 20px;
+        border-radius: 4px;
+        .container{
+
+            .lists{
+                .item{
+                    background: #ffffff;
+                    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+                    .content{
+                        padding: 16px;
+                        display: flex;
+                        .portrait{
+                            flex: 0;
+                            .headPortrait{
+                                width: 46px;
+                                height: 46px;
+                                border-radius: 50%;
+                                background-size: cover;
+
+                            }
+                        }
+                        .postContent{
+                            flex: 1;
+                            padding-left: 12px;
+                            .userMain{
+                                height: 46px;
+                                display: flex;
+                                align-items: center;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                .info{
+                                    .title{
+                                        font-size: 18px;
+                                        margin: 0;
+                                    }
+                                    .text{
+                                        font-size: 13px;
+                                    }
+
+                                }
+                                .operation{
+                                    .focus{
+                                        color: #6cbd45;
+                                        border-color: #6cbd45;
+                                    }
+                                    .more{
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        margin-left: 16px;
+                                        cursor: pointer;
+                                    }
+
+                                }
+                            }
+                            .theText{
+                                padding-top: 10px;
+                            }
+                            .atlasList{
+                                display: flex;
+                                align-items: center;
+                                flex-flow: wrap;
+                                .img{
+                                    width: 120px;
+                                    height: 120px;
+                                    border-radius: 4px;
+                                    background-size: cover;
+                                    margin-right: 6px;
+                                    margin-bottom: 6px;
+                                }
+                            }
+                            .tags{
+                                padding-top: 6px;
+                            }
+
+                        }
+                    }
+                    .action{
+                        display: flex;
+                        align-items: center;
+                        border-top: 1px solid #f0f0f0;
+                        .main{
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 10px 0;
+                            color: #8a93a0;
+                            font-size: 13px;
+                            font-weight: 500;
+                            .text{
+                                margin-left: 6px;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .sidebar{
+        flex: 0 auto;
+        width: 240px;
+        height: min-content;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+
+    }
+}

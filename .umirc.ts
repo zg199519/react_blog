@@ -27,18 +27,18 @@ export default defineConfig({
         },
         {
           path: '/story',
-          name: '故事',
+          name: '帖子',
           component: '@/pages/story/index',
           meta: {
-            title: '故事',
+            title: '帖子',
           },
         },
         {
-          path: '/message',
-          name: '留言',
-          component: '@/pages/message/index',
+          path: '/activity',
+          name: '活动',
+          component: '@/pages/activity/index',
           meta: {
-            title: '留言',
+            title: '活动',
           },
         },
 
