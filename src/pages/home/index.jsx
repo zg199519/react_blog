@@ -6,7 +6,17 @@ import SiderRight from '@/components/sider/index'
 import indexStyles from './index.less'
 import { LikeFilled , MessageFilled , ChromeFilled} from '@ant-design/icons';
 
+import { getList } from '@/server/home'
+
 export default class home extends React.Component {
+
+  componentDidMount(){
+    getList().then((data)=>{
+      console.log(data)
+
+    })
+    
+  }
 
   render() {
     let itemLists = [1,2,3,4,1,2,3,4,1,2,3,4].map((item,index)=>{

@@ -6,6 +6,9 @@ import styles from './header.less'
 const { Search } = Input;
 
 export default class Header extends React.Component{
+    
+
+
     state = {
         current: 'post',
     };
