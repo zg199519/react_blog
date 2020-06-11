@@ -1,13 +1,4 @@
-
 import axios from 'axios'
-// import store from '@/store'
-
-// import 'nprogress/nprogress.css'
-
-// import { LogOut , accountAbnormal} from './../libs/base'
-// import { Message} from 'element-ui';//UI框架
-
-
 
 // 创建axios请求实例
 const request = axios.create({
@@ -28,19 +19,14 @@ request.interceptors.request.use(function (config) {
 // 添加响应拦截器
 request.interceptors.response.use(function (response) {
 
+    //接口响应正确
+    if(response.status === 200){
+        const data = response.data  
+        return data;
+    }else{
+        console.log('接口响应失败')
+    }
     
-
-    // //接口响应正确
-    const data = response.data  
-    // if(data.code == 4000){//账户异常 用户不存在 账户到期 账户被禁用
-    //     Message.error(data.message)
-    //     accountAbnormal(data.message)
-    // }else if(data.code == 2000){//普通异常
-    //     Message.error(data.message)
-    // }
-
-    console.log(data)
-    return data;
 
 }, function (error) {
 

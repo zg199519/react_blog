@@ -1,65 +1,182 @@
 import React from 'react'
 import { Button , Space} from 'antd';
 import TagStyles from './tags.less'
+import { categoryList , tagList } from '@/server/http'
+import { history , withRouter } from 'umi'
 
-export default class Tags extends React.Component{
+class Tags extends React.Component{
 
-    state = {
-        tags:[
-            {name:'全部',value:1},
-            {name:'Vue',value:1},
-            {name:'React',value:1},
-            {name:'小程序',value:1},
-            {name:'Flutter/Dart',value:1},
-            
-            {name:'Html5',value:1},
-            {name:'Css3',value:1},
-            {name:'Es6',value:1},
-            {name:'Node.js',value:1},
-            {name:'Npm',value:1},
+    constructor(props){
+        super(props)
+        this.state = {
+            categoryList:[],//分类数据集合
+            tags:[],//标签数据集合
+            code:true,//是否需要 显示 二级标签分类  props.code
+            params:{
+                category: null, 
+                tag: null
+            },//路由的参数键值对  props.match.params
+            state:false //是否可以请求
+        }
+        this.setCategoryFun = this.setCategoryFun.bind(this);
+    }
+    
+    componentDidMount(){
+        this.getList()//获取数据分类列表
+    }
 
-            {name:'Php',value:1},
-            {name:'Java',value:1},
-            {name:'Python',value:1},
-            {name:'Es6',value:1},
-            {name:'Node.js',value:1},
-            {name:'Npm',value:1},
-            {name:'Flutter/Dart',value:1}
-        ]
+    //路由变化 初始化 改变变量的值
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     return {
+    //         code:nextProps.code,
+    //         params:nextProps.match.params
+    //     };
+    //     // let nextParams = nextProps.match.params;//路由携带参数集合
+    //     // let prevParams = prevState.params;//默认数据集合
+    //     // if (JSON.stringify(nextParams) !== JSON.stringify(prevParams) ) {
+    //     //     return {
+    //     //         code:nextProps.code,
+    //     //         params:nextParams,
+    //     //     };
+    //     // }
+    //     // // 否则，对于state不进行任何操作
+    //     // return null;
+    // }
+
+    // 数据更新后的变化的异步操作
+    // componentDidUpdate(prevProps, prevState) {
+ 
+    //     // console.log(prevProps, prevState)
+    //     // this.getTagList()//获取二级标签列表
+    // }
+
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+
+        let tagState = false //是否获取标签
+        if(this.state.params.category !== nextProps.match.params.category){
+            tagState = true
+        }
+
+        this.setState({
+            params:nextProps.match.params,
+            code:nextProps.code?nextProps.code:true
+        },() => {
+            if(tagState){
+                this.getTagList()//获取二级标签列表
+            }
+        })
+
+    }
+
+    // 获取分类数据列表
+    async getList(){
+        let data = await categoryList();
+        this.setState({
+            categoryList:data.data
+        })
+    }
+
+
+    // 获取二级标签列表
+    async getTagList(){
+        // 判断获取 二级菜单
+        if(this.state.code && this.state.params.category){
+            let data = await tagList();
+            this.setState({
+                tags:data.data
+            })
+        }else{
+            this.setState({
+                tags:[]
+            })
+        }
+    }
+
+
+    // 分类点击事件
+    setCategoryFun = (code = '')=>{
+        // 跳转
+        history.push(`/home${code?('/'+code):''}`);
+    }
+
+    // 标签分类点击事件
+    setTagFun = (tagId = '')=>{
+        // 跳转
+        history.push(`/home/${this.state.params.category}${tagId?('/'+tagId):''}`);
     }
 
     render(){
-
-        // 标签循环
-        let tags = this.state.tags.map((item,index)=>{
-           return <Button key={index} shape="round" size="small" className={TagStyles.tag}>{item.name}</Button>
+        
+        //分类列表
+        let category = this.state.categoryList.map((item,index)=>{
+            return (
+                <Button 
+                    type="link" 
+                    className={`${TagStyles.button} ${(this.state.params.category == item.id)?TagStyles.active:''}`} 
+                    key={index} 
+                    onClick={()=>this.setCategoryFun(item.id)}>
+                        {item.name}
+                </Button> 
+            )
         })
+        
+
+        // 标签列表
+        let tags = ()=>{
+            if(this.state.tags){
+                return this.state.tags.map((item,index)=>{
+                    return (
+                        <Button key={index} 
+                        shape="round" 
+                        size="small" 
+                        className={`${TagStyles.tag} ${this.state.params.tag == item.tagId?TagStyles.active:''}`}
+                        onClick={()=>this.setTagFun(item.tagId)}
+                        >{item.name}</Button>
+                    )
+                })
+            }else{
+                return ''
+            }
+        }
 
 
         return(
             <div>
                 <div className={TagStyles.classification}>
                     <div className={`container ${TagStyles.item}`}>
-                        <Button type="link" className={TagStyles.button}>全部</Button>
-                        <Button type="link" className={TagStyles.button}>前端</Button>
-                        <Button type="link" className={TagStyles.button}>后端</Button>
-                        <Button type="link" className={TagStyles.button}>运维</Button>
+                        <Button 
+                            type="link" 
+                            className={`${TagStyles.button} ${this.state.params.category?'':TagStyles.active}`} 
+                            onClick={()=>this.setCategoryFun()}>
+                                全部
+                        </Button> 
+                        {category}
                     </div>
                 </div>
 
                 {
-                    this.props.code
+                    this.state.code && (this.state.tags.length > 0)
                     ?
                         <div className="container">
                             <Space className={TagStyles.lists} size={14}>
-                                {tags}
+                                <Button 
+                                shape="round" 
+                                size="small" 
+                                className={`${TagStyles.tag} ${this.state.params.tag?'':TagStyles.active}`}
+                                onClick={()=>this.setTagFun()}
+                                >全部</Button>
+                                {tags()}
                             </Space>
                         </div>
-                    :
-                    ''
+                    :''
                 }
+
             </div>
         )
+
     }
 
 }
+
+export default withRouter(Tags)

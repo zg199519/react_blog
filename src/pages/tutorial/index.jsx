@@ -5,9 +5,51 @@ import SiderRight from '@/components/sider/index'
 import Tags from '@/components/home/tags'
 import styles from './index.less'
 
+import { getList } from '@/server/tutorial'
+
 export default class tutorial extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      total:0,
+      list:[],//数据集合
+    }
+  }
+
+  componentDidMount(){
+    this.getList()
+  }
+
+  // 获取数据列表
+  async getList(){
+    let data = await getList();
+    this.setState({
+      list:data.data.list
+    })
+  }
+
   render() {
+
+    const lists = this.state.list.map((item,index)=>{
+      return(
+        <div className={styles.item} key={index}>
+          <div className={styles.theCover} style={{backgroundImage:`url(${item.cover})`}}></div>
+          <div className={styles.info}>
+          <div className={`${styles.title} text-line`}>{item.title}</div>
+            <div className={`${styles.desc} text-two`}>
+                {item.desc}
+            </div>
+            <div className={`${styles.author} text-line`}>
+                <Avatar size={30} src={item.user.portrait} />
+                <span className={styles.name}>{item.user.name}</span>
+                <span>阅读时长{item.readingTime}秒.{item.views}浏览.{item.chapters}节</span>
+            </div>
+          </div>
+        </div>
+      )
+    })
+    
     return (
       <section>
         <Tags code={false}/>
@@ -15,67 +57,9 @@ export default class tutorial extends React.Component {
              <Layout>
                 <Content className={styles.content}>
                   <div className={styles.main}>
-
                     <div className={styles.volumeList}>
-
-                      <div className={styles.item}>
-                        <div className={styles.theCover} style={{backgroundImage:`url(${'http://api.noahzhou.com//uploads/resource/20190119/1547899256.jpeg'})`}}></div>
-                        <div className={styles.info}>
-                          <div className={`${styles.title} text-line`}>这里是小册标题标题</div>
-                          <div className={`${styles.desc} text-two`}>
-                            继SpringBoot原理分析之后的又一力作，从熟悉的场景逐步深入源码底层，理解SpringCloudNetflix中组件的设计和原理。
-                          </div>
-                          <div className={`${styles.author} text-line`}>
-                              <Avatar size={30} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              <span className={styles.name}>夏日里的一把阳光</span>
-                              <span>阅读时长791分30秒.888浏览.30节</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className={styles.item}>
-                        <div className={styles.theCover} style={{backgroundImage:`url(${'http://api.noahzhou.com//uploads/resource/20190119/1547899256.jpeg'})`}}></div>
-                        <div className={styles.info}>
-                          <div className={`${styles.title} text-line`}>这里是小册标题标题</div>
-                          <div className={`${styles.desc} text-two`}>继SpringBoot原理分析之后的又一力作，从熟悉的场景逐步深入源码底层，理解SpringCloudNetflix中组件的设计和原理。</div>
-                          <div className={`${styles.author} text-line`}>
-                              <Avatar size={30} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              <span className={styles.name}>夏日里的一把阳光</span>
-                              <span>阅读时长791分30秒.888浏览.30节</span>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div className={styles.item}>
-                        <div className={styles.theCover} style={{backgroundImage:`url(${'http://api.noahzhou.com//uploads/resource/20190119/1547899256.jpeg'})`}}></div>
-                        <div className={styles.info}>
-                          <div className={`${styles.title} text-line`}>这里是小册标题标题</div>
-                          <div className={`${styles.desc} text-two`}>继SpringBoot原理分析之后的又一力作，从熟悉的场景逐步深入源码底层，理解SpringCloudNetflix中组件的设计和原理。</div>
-                          <div className={`${styles.author} text-line`}>
-                              <Avatar size={30} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              <span className={styles.name}>夏日里的一把阳光</span>
-                              <span>阅读时长791分30秒.888浏览.30节</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className={styles.item}>
-                        <div className={styles.theCover} style={{backgroundImage:`url(${'http://api.noahzhou.com//uploads/resource/20190119/1547899256.jpeg'})`}}></div>
-                        <div className={styles.info}>
-                          <div className={`${styles.title} text-line`}>这里是小册标题标题</div>
-                          <div className={`${styles.desc} text-two`}>继SpringBoot原理分析之后的又一力作，从熟悉的场景逐步深入源码底层，理解SpringCloudNetflix中组件的设计和原理。</div>
-                          <div className={`${styles.author} text-line`}>
-                              <Avatar size={30} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                              <span className={styles.name}>夏日里的一把阳光</span>
-                              <span>阅读时长791分30秒.888浏览.30节</span>
-                          </div>
-                        </div>
-                      </div>
-    
-
+                      {lists}
                     </div>
-
                   </div>
                 </Content>
                 <Sider className={`background-none`} width={240}>

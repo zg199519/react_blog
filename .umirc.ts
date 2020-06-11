@@ -9,8 +9,13 @@ export default defineConfig({
       path: '/', 
       component: '@/pages/app' ,
       routes: [
+        // 负责跳转
         {
           path: '/',
+          redirect: '/home',
+        },
+        {
+          path: '/home/:category?/:tag?',
           name: '首页',
           component: '@/pages/home/index',
           meta: {

@@ -1,9 +1,9 @@
 import request from './request'
 
-// 首页数据列表
+// 获取小册列表
 export function getList(data = {}) {
     return request({
-      url: '/api/home/getLists',
+      url: '/api/tutorial/getLists',
       method: 'post',
       data
     })
