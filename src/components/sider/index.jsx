@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar , Button} from 'antd';
+import { Avatar , Button , Affix} from 'antd';
 
 import {
     CaretRightOutlined
@@ -10,11 +10,15 @@ export default class sider extends React.Component{
     render(){
         return(
             <div className={styles.home}>
+                
+
                 {/* 广告模块 */}
                 <div className={styles.advertising}>
                     <img src="https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*C1-TT7vgidAAAAAAAAAAAABkARQnAQ"/>
                     <div className={styles.tag}>广告</div>
                 </div>
+
+               
                 {/* 作者榜单模块 */}
                 <div className={styles.authorList}>
                     <div className={styles.title}>🎖️作者榜单</div>
@@ -59,6 +63,8 @@ export default class sider extends React.Component{
 
                 </div>
 
+      
+
                 {/* 推荐小册 */}
                 <div className={styles.smallVolumes}>
                     <div className={styles.title}>推荐小册</div>
@@ -96,17 +102,17 @@ export default class sider extends React.Component{
                     </div>
 
                 </div>
+                <Affix offsetTop={60}>
+                    {/* 底部的备案号 和版本 */}
+                    <div className={styles.websiteInfo}>
+                        <p>皖ICP备17013813号-2</p>
+                        <p>version2.0</p>
+                    </div>
 
-                {/* 底部的备案号 和版本 */}
-                <div className={styles.websiteInfo}>
-                    <p>皖ICP备17013813号-2</p>
-                    <p>version2.0</p>
-                </div>
-
-
-
+                </Affix>
 
                 
+
             </div>
         )
     }

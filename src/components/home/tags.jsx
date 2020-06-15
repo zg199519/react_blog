@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button , Space} from 'antd';
+import { Button , Space , Affix} from 'antd';
 import TagStyles from './tags.less'
 import { categoryList , tagList } from '@/server/http'
 import { history , withRouter } from 'umi'
@@ -12,61 +12,35 @@ class Tags extends React.Component{
             categoryList:[],//分类数据集合
             tags:[],//标签数据集合
             code:true,//是否需要 显示 二级标签分类  props.code
-            params:{
-                category: null, 
-                tag: null
-            },//路由的参数键值对  props.match.params
-            state:false //是否可以请求
+            params:{ category: undefined,  tag: undefined }//路由的参数键值对  props.match.params
         }
-        this.setCategoryFun = this.setCategoryFun.bind(this);
     }
     
-    componentDidMount(){
-        this.getList()//获取数据分类列表
-    }
-
     //路由变化 初始化 改变变量的值
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     return {
-    //         code:nextProps.code,
-    //         params:nextProps.match.params
-    //     };
-    //     // let nextParams = nextProps.match.params;//路由携带参数集合
-    //     // let prevParams = prevState.params;//默认数据集合
-    //     // if (JSON.stringify(nextParams) !== JSON.stringify(prevParams) ) {
-    //     //     return {
-    //     //         code:nextProps.code,
-    //     //         params:nextParams,
-    //     //     };
-    //     // }
-    //     // // 否则，对于state不进行任何操作
-    //     // return null;
-    // }
+    static getDerivedStateFromProps(nextProps, prevState) {
 
-    // 数据更新后的变化的异步操作
-    // componentDidUpdate(prevProps, prevState) {
- 
-    //     // console.log(prevProps, prevState)
-    //     // this.getTagList()//获取二级标签列表
-    // }
-
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-
-        let tagState = false //是否获取标签
-        if(this.state.params.category !== nextProps.match.params.category){
-            tagState = true
+        if((JSON.stringify(nextProps.match.params) !== JSON.stringify(prevState.params)) || (nextProps.code !== prevState.code)){
+            return {
+                code:nextProps.code,
+                params:nextProps.match.params
+            };
+        }else{
+            return null;
         }
 
-        this.setState({
-            params:nextProps.match.params,
-            code:nextProps.code?nextProps.code:true
-        },() => {
-            if(tagState){
-                this.getTagList()//获取二级标签列表
-            }
-        })
+    }
 
+    componentDidMount(){
+        this.getList()//获取数据分类列表
+        this.getTagList()//获取标签列表
+    }
+
+
+    //数据更新后的变化的异步操作
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.match.params.category !== this.props.match.params.category){
+            this.getTagList()
+        }
     }
 
     // 获取分类数据列表
@@ -77,12 +51,12 @@ class Tags extends React.Component{
         })
     }
 
-
     // 获取二级标签列表
     async getTagList(){
+
         // 判断获取 二级菜单
         if(this.state.code && this.state.params.category){
-            let data = await tagList();
+            let data = await tagList({category:this.state.params.category});
             this.setState({
                 tags:data.data
             })
@@ -91,6 +65,7 @@ class Tags extends React.Component{
                 tags:[]
             })
         }
+
     }
 
 
@@ -143,17 +118,20 @@ class Tags extends React.Component{
 
         return(
             <div>
-                <div className={TagStyles.classification}>
-                    <div className={`container ${TagStyles.item}`}>
-                        <Button 
-                            type="link" 
-                            className={`${TagStyles.button} ${this.state.params.category?'':TagStyles.active}`} 
-                            onClick={()=>this.setCategoryFun()}>
-                                全部
-                        </Button> 
-                        {category}
+                <Affix offsetTop={0}>
+                    <div className={TagStyles.classification}>
+                        <div className={`container ${TagStyles.item}`}>
+                            <Button 
+                                type="link" 
+                                className={`${TagStyles.button} ${this.state.params.category?'':TagStyles.active}`} 
+                                onClick={()=>this.setCategoryFun()}>
+                                    全部
+                            </Button> 
+                            {category}
+                        </div>
                     </div>
-                </div>
+                </Affix>
+
 
                 {
                     this.state.code && (this.state.tags.length > 0)

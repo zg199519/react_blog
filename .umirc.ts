@@ -31,7 +31,7 @@ export default defineConfig({
           },
         },
         {
-          path: '/story',
+          path: '/story/:category?',
           name: '帖子',
           component: '@/pages/story/index',
           meta: {

@@ -30,12 +30,4 @@ export default {
     }),
 
 
-
-
-
-
-
 }
-
-
-

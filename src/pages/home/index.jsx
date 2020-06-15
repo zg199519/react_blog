@@ -12,69 +12,115 @@ import {history} from 'umi'
 export default class home extends React.Component {
 
   constructor(props){
+
     super(props)
     this.state = {
-      total:0,
+      page:1,//页数
       list:[],//数据集合
-      params:props.match.params,//路由参数
-      sort:'recommended',//排序 默认是推荐
+      params:{category: undefined, tag: undefined},//路由参数category: null, tag: null
+      sort:'recommended'//排序 默认是推荐
     }
-
     this.setSort = this.setSort.bind(this);
 
   }
 
-  componentDidMount(){
-    this.getList()
+
+  // 主要是初始化 state 的值 1
+  static getDerivedStateFromProps( nextProps, prevState ) {
+    if(JSON.stringify(nextProps.match.params) !== JSON.stringify(prevState.params)){
+      return {
+        page:1,
+        list:[],
+        params:nextProps.match.params,
+        sort:'recommended'
+      };
+    }else{
+      return null
+    }
   }
 
-//   static getDerivedStateFromProps(nextProps, prevState) {
-//     let nextParams = nextProps.match.params;
-//     let prevParams = prevState.params;
-//     if (JSON.stringify(nextParams) !== JSON.stringify(prevParams) ) {
-//         return {
-//             params:nextParams
-//         };
-//     }
-//     // 否则，对于state不进行任何操作
-//     return null;
-// }
+  // 第一次运行 2
+  componentDidMount(){
+    this.getLists()
+    window.addEventListener('scroll', this.handleScroll)
+  }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  // 卸载过程中
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.handleScroll)
+  }
 
-    this.setState({
-      params:nextProps.match.params
-    },()=>{
-      this.getList()
-    })
+  handleScroll= () =>{
+    let isScrollBottom = (parseInt(this.getScrollTop()) + parseInt(this.getClientHeight())) - parseInt(this.getScrollHeight())
+    if (isScrollBottom >= -40) {
+      let pageNum = this.state.page+1
+      this.setState({
+        page:pageNum
+      })
+    }
+  }
 
+  // 组件更新
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.match.params.category !== this.props.match.params.category){
+      this.getLists() 
+    }else if(prevProps.match.params.tag !== this.props.match.params.tag){
+      this.getLists() 
+    }else if(prevState.sort !== this.state.sort){
+      this.getLists() 
+    }else if(prevState.page !== this.state.page){
+      this.getLists() 
+    }
   }
 
   // 获取数据列表
-  async getList(){
-    //获取查询条件
-    let params = this.state.params
-    let requestData = {
-      category: params.category?params.category:null,//分类ID
-      tag: params.tag?params.tag:null, //二级分类标签ID
-      sort:this.state.sort //排序
-    }
-
-    let data = await getList(requestData);
-    this.setState({
-      list:data.data.list
-    })
+  async getLists(){
+      let params = this.state.params
+      let requestData = {
+        page:this.state.page,
+        category: params.category?params.category:null,//分类ID
+        tag: params.tag?params.tag:null, //二级分类标签ID
+        sort:this.state.sort //排序
+      }
+      let data = await getList(requestData);
+      this.setState({
+        list:this.state.list.concat(data.data.list)
+      })
   }
 
   // 更改排序规则
   setSort(code = 'recommended'){
     this.setState({
-      sort:code
-    },()=>{
-      this.getList()
+      sort:code,
+      page:1,
+      list:[]
     })
-
   }
+
+  getScrollTop() {
+      var scrollTop = 0;
+      if (document.documentElement && document.documentElement.scrollTop) {
+          scrollTop = document.documentElement.scrollTop;
+      } else if (document.body) {
+          scrollTop = document.body.scrollTop;
+      }
+      return scrollTop;
+  }
+
+  getClientHeight() {
+      var clientHeight = 0;
+      if (document.body.clientHeight && document.documentElement.clientHeight) {
+          clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+      } else {
+          clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+      }
+      return clientHeight;
+  }
+
+  getScrollHeight() {
+      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+  }
+
 
   render() {
     // 列表数据
