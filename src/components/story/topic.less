@@ -1,0 +1,46 @@
+.topic{
+    position: relative;
+    padding-top: 64px;
+    .search{
+        height: 64px;
+        padding: 16px 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background-color: #ffffff;
+        z-index: 1000;
+    }
+    ul{
+        width: 240px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        max-height: 300px;
+        overflow-y: auto;
+        margin: 0 -16px;
+        .item{
+            cursor: pointer;
+            background-color: #ffffff;
+            display: flex;
+            padding: 10px 16px;
+            border-bottom: 1px solid hsla(0,0%,59.2%,.1);
+            .cover{
+                flex: 0 auto;
+                width: 42px;
+                height: 42px;
+                border-radius: 4px;
+            }
+            .info{
+                flex: 1;
+                width: 0;
+                padding-left: 10px;
+                .title{
+                    margin: 0;
+                }
+            }
+        }
+        .item:hover{
+            background-color: #eef2f5;
+        }
+    }
+}

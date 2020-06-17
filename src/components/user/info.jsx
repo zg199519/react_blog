@@ -1,40 +1,66 @@
-import React from 'react'
+import React, { useState , useEffect } from 'react';
 import { Avatar , Typography , Divider} from 'antd';
 import styles from './info.less'
 
+import { getUserInfo , getUserStatistical} from '@/server/user'
 
-export default class info extends React.Component{
-    render(){
-        return (
-            <div className={styles.info}>
-                <div className={styles.basicInfo}>
-                    <Avatar size={62} src="http://qzapp.qlogo.cn/qzapp/101541263/16392CE435BE52E10D52974E97F9F894/50" />
-                    <div className={styles.mation}>
-                        <h3 className={styles.title}>标题标题标题标题</h3>
-                        <p className={styles.desc}>加上就很大webdsa</p>
-                    </div>
-                </div>
-                <Divider className={styles.divider}></Divider>
-                <div className={styles.statistical}>
+function info() {
+     // 声明一个叫 “count” 的 state 变量。 
+    const [ userInfo, setUserInfo ] = useState({});
+    const [ statistical, setStatistical ] = useState({});
 
-                    <div className={styles.item}>
-                        <div className={styles.title}>标题</div>
-                        <div className={styles.count}>288</div>
-                    </div>
-                    <Divider type="vertical" />
-                    <div className={styles.item}>
-                        <div className={styles.title}>标题</div>
-                        <div className={styles.count}>288</div>
-                    </div>
-                    <Divider type="vertical" />
-                    <div className={styles.item}>
-                        <div className={styles.title}>标题</div>
-                        <div className={styles.count}>288</div>
-                    </div>
-                    
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(
+        () => {
+            getInfo()
+            getStatistical()
+        },[]
+    );
 
-                </div>
-            </div>
-        )
+    async function getInfo(){
+        let data = await getUserInfo();
+        setUserInfo(data.data)
     }
+
+    async function getStatistical(){
+        let data = await getUserStatistical();
+        setStatistical(data.data)
+    }
+
+
+    return (
+        <div className={styles.info}>
+            <div className={styles.basicInfo}>
+
+                <Avatar size={62} src={userInfo.portrait} className={styles.portrait}/>
+                <div className={styles.mation}>
+                    <h3 className={`${styles.title} text-line`}>{userInfo.name}</h3>
+                    <p className={`${styles.desc} text-two`}>{userInfo.position}</p>
+                </div>
+
+            </div>
+            <Divider className={styles.divider}></Divider>
+            <div className={styles.statistical}>
+
+                <div className={styles.item}>
+                    <div className={styles.title}>帖子</div>
+                    <div className={styles.count}>{statistical.postNum}</div>
+                </div>
+                <Divider type="vertical" />
+                <div className={styles.item}>
+                    <div className={styles.title}>关注</div>
+                    <div className={styles.count}>{statistical.focus}</div>
+                </div>
+                <Divider type="vertical" />
+                <div className={styles.item}>
+                    <div className={styles.title}>关注者</div>
+                    <div className={styles.count}>{statistical.beFocus}</div>
+                </div>
+                
+
+            </div>
+        </div>
+    );
 }
+
+export default info

@@ -32,6 +32,15 @@ export default {
         ]
     }),
 
+    // 广告
+    '/api/advertising': Mock.mock({ 
+        code: 10000,
+        data: {
+            img:Random.image('100x100', Random.color(), Random.cword(1)),
+            name:'广告'
+        }
+    }),
+
 
 
 

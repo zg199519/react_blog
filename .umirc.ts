@@ -23,7 +23,7 @@ export default defineConfig({
           },
         },
         {
-          path: '/tutorial',
+          path: '/tutorial/:category?',
           name: '教程',
           component: '@/pages/tutorial/index',
           meta: {

@@ -17,3 +17,12 @@ export function tagList(data = {}) {
     params: data
   })
 }
+
+// 广告
+export function advertising(data = {}) {
+  return request({
+    url: '/api/advertising',
+    method: 'get',
+    params: data
+  })
+}

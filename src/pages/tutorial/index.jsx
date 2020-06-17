@@ -14,6 +14,30 @@ export default class tutorial extends React.Component {
     this.state = {
       total:0,
       list:[],//数据集合
+      params:{
+        category:undefined,//分类ID
+      }
+    }
+  }
+
+
+  //路由变化 初始化 改变变量的值
+  static getDerivedStateFromProps(nextProps, prevState) {
+
+    if(nextProps.match.params.category !== prevState.params.category){
+      return {
+          list:[],//数据集合
+          params:nextProps.match.params
+      };
+    }else{
+      return null;
+    }
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.match.params.category !== this.props.match.params.category){
+      this.getList()
     }
   }
 
@@ -23,7 +47,7 @@ export default class tutorial extends React.Component {
 
   // 获取数据列表
   async getList(){
-    let data = await getList();
+    let data = await getList(this.state.params);
     this.setState({
       list:data.data.list
     })
@@ -52,7 +76,7 @@ export default class tutorial extends React.Component {
     
     return (
       <section>
-        <Tags code={false}/>
+        <Tags code={false} jump={'tutorial'}/>
         <div className={`container ${styles.welcomeContext}`}>
              <Layout>
                 <Content className={styles.content}>

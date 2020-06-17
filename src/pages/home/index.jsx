@@ -160,7 +160,7 @@ export default class home extends React.Component {
     return (
       <section>
         <div>
-            <Tags code={true}/>
+            <Tags code={true} jump={'home'}/>
             <div className={`container ${indexStyles.welcomeContext}`}>
              <Layout>
                 <Content className={indexStyles.content}>

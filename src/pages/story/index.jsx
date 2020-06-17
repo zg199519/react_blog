@@ -4,6 +4,7 @@ const { Title , Text, Link , Paragraph} = Typography;
 import styles from './index.less'
 import SiderRight from '@/components/sider/index'
 import UserInfo from '@/components/user/info'
+import Editor from '@/components/story/editor'
 import { LikeOutlined , MessageOutlined , ForkOutlined , EllipsisOutlined} from '@ant-design/icons';
 
 import { storyList , getCategoryList } from '@/server/story'
@@ -20,7 +21,6 @@ export default class story extends React.Component {
           category:undefined,//分类ID
         }
     }
-
   }
 
   //路由变化 初始化 改变变量的值
@@ -107,7 +107,6 @@ export default class story extends React.Component {
                       })
                   }
                 </div>
-
                 <div className={styles.tags}>
                   {
                       item.topics.map((item2,number2)=>{
@@ -134,13 +133,12 @@ export default class story extends React.Component {
     return (
       
       <section className={`container ${styles.story}`}>
+        {/* 左侧菜单 */}
         <div className={styles.navigation}>
           <ul>
             <li className={this.state.params.category === "hot" || !this.state.params.category?styles.active:''} onClick={()=>this.setCategoryFun("hot")}>热门</li>
             <li className={this.state.params.category === "recommended"?styles.active:''} onClick={()=>this.setCategoryFun("recommended")}>推荐</li>
-
             <Divider className={styles.divider}/>
-
             {
                 this.state.categoryList.map((item,index) =>{
                       return (
@@ -150,22 +148,23 @@ export default class story extends React.Component {
             }
           </ul>
         </div>
+
         <div className={styles.stream}>
           <div className={styles.container}>
-
+            {/* 编辑发布文章 */}
+            <div className={styles.editor}>
+              <Editor></Editor>
+            </div>
             {/* 数据列表 */}
             <div className={styles.lists}>
               {lists}
             </div>
-
           </div>
         </div>
         <div className={styles.sidebar}>
           <UserInfo></UserInfo>
           <SiderRight></SiderRight>
         </div>
-
-
 
       </section>
     );

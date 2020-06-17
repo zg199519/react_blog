@@ -12,7 +12,8 @@ class Tags extends React.Component{
             categoryList:[],//分类数据集合
             tags:[],//标签数据集合
             code:true,//是否需要 显示 二级标签分类  props.code
-            params:{ category: undefined,  tag: undefined }//路由的参数键值对  props.match.params
+            params:{ category: undefined,  tag: undefined },//路由的参数键值对  props.match.params
+            jump:null
         }
     }
     
@@ -22,7 +23,8 @@ class Tags extends React.Component{
         if((JSON.stringify(nextProps.match.params) !== JSON.stringify(prevState.params)) || (nextProps.code !== prevState.code)){
             return {
                 code:nextProps.code,
-                params:nextProps.match.params
+                params:nextProps.match.params,
+                jump:nextProps.jump
             };
         }else{
             return null;
@@ -72,7 +74,7 @@ class Tags extends React.Component{
     // 分类点击事件
     setCategoryFun = (code = '')=>{
         // 跳转
-        history.push(`/home${code?('/'+code):''}`);
+        history.push(`/${this.state.jump?this.state.jump:'home'}${code?('/'+code):''}`);
     }
 
     // 标签分类点击事件

@@ -1,0 +1,107 @@
+.editor{
+    background-color: #fff;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    .editorBody{
+        padding: 16px 16px 0 16px;
+        .content{
+            position: relative;
+            border-radius: 2px;
+            border: 1px solid hsla(0,0%,59.2%,.2);
+            background-color: rgba(226,230,235,.2);
+            padding: 8px 10px;
+            .document{
+                min-height: 80px;
+                outline: none;
+                font-size: 13px;
+                color: #333;
+                img{
+                    width: 13px;
+                    margin: 0 4px;
+                }
+            }
+            .document:empty:before{
+                content: attr(placeholder);
+                position: absolute;
+                top: 8px;
+                color: rgba(23,24,26,.4);
+                pointer-events: none;
+                user-select: none;
+            }
+            .document:focus:before{
+                content:none;
+            }
+            .remainingWords{
+                text-align: right;
+                font-size: 13px;
+                color: #a1a9b3;
+            }
+            .remainingWords.error{
+                color: red;
+            }
+
+            .tag{
+                display: flex;
+                align-items: center;
+                padding-top: 10px;
+                .link{
+                    cursor: pointer;
+                    max-width: 100px;
+                    padding: 0 10px;
+                }
+            }
+            
+            .atlas{
+
+            }
+            .atlas.none{
+                display: none;
+            }
+
+        }
+        .content.active{
+            border: 1px solid #027fff;
+        }
+
+
+    }
+    .bottom{
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .operation{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            .item{
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                color: #027fff;
+                font-size: 13px;
+                margin-right: 20px;
+                .name{
+                    padding: 0;
+                    span{
+                        margin-left: 0px;
+                    }
+                }
+                
+            }
+            
+
+        }
+        .submit{
+            flex: 0 auto;
+            display: flex;
+            align-items: center;
+            .hint{
+                color: #c2c2c2;
+                font-size: 13px;
+                margin-right: 20px;
+            }
+        }
+    }
+}
