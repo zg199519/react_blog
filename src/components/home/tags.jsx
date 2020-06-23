@@ -47,7 +47,7 @@ class Tags extends React.Component{
 
     // 获取分类数据列表
     async getList(){
-        let data = await categoryList();
+        let data = await categoryList({parentId:-1});
         this.setState({
             categoryList:data.data
         })
@@ -58,7 +58,7 @@ class Tags extends React.Component{
 
         // 判断获取 二级菜单
         if(this.state.code && this.state.params.category){
-            let data = await tagList({category:this.state.params.category});
+            let data = await categoryList({parentId:this.state.params.category});
             this.setState({
                 tags:data.data
             })
@@ -107,8 +107,8 @@ class Tags extends React.Component{
                         <Button key={index} 
                         shape="round" 
                         size="small" 
-                        className={`${TagStyles.tag} ${this.state.params.tag == item.tagId?TagStyles.active:''}`}
-                        onClick={()=>this.setTagFun(item.tagId)}
+                        className={`${TagStyles.tag} ${this.state.params.tag == item.id?TagStyles.active:''}`}
+                        onClick={()=>this.setTagFun(item.id)}
                         >{item.name}</Button>
                     )
                 })

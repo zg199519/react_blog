@@ -54,12 +54,12 @@ export default defineConfig({
   ],
   //全局环境配置
   define: {
-    API_BASE_URL: (process.env.NODE_ENV === 'development')?'/api':'http://192.168.71.97:8000',
+    API_BASE_URL: (process.env.NODE_ENV === 'development')?'/api':'http://127.0.0.1:7001',
   },
   // 代理配置
   proxy: {
     '/api': {
-      'target': 'http://192.168.71.97:8000',
+      'target': 'http://127.0.0.1:7001',
       'changeOrigin': true,
       'pathRewrite': { '^/api' : '' },
     },

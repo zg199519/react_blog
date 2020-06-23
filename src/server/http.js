@@ -3,9 +3,9 @@ import request from './request'
 // 获取分类列表
 export function categoryList(data = {}) {
     return request({
-      url: '/api/category/lists',
-      method: 'get',
-      params: data
+      url: '/api/category/list',
+      method: 'post',
+      data
     })
 }
 

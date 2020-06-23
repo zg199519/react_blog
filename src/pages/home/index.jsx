@@ -15,7 +15,8 @@ export default class home extends React.Component {
 
     super(props)
     this.state = {
-      page:1,//页数
+      pageNo:1,//页数
+      pageSize:10,//每页的数据集合
       list:[],//数据集合
       params:{category: undefined, tag: undefined},//路由参数category: null, tag: null
       sort:'recommended'//排序 默认是推荐
@@ -29,7 +30,7 @@ export default class home extends React.Component {
   static getDerivedStateFromProps( nextProps, prevState ) {
     if(JSON.stringify(nextProps.match.params) !== JSON.stringify(prevState.params)){
       return {
-        page:1,
+        pageNo:1,
         list:[],
         params:nextProps.match.params,
         sort:'recommended'
@@ -53,9 +54,9 @@ export default class home extends React.Component {
   handleScroll= () =>{
     let isScrollBottom = (parseInt(this.getScrollTop()) + parseInt(this.getClientHeight())) - parseInt(this.getScrollHeight())
     if (isScrollBottom >= -40) {
-      let pageNum = this.state.page+1
+      let pageNum = this.state.pageNo+1
       this.setState({
-        page:pageNum
+        pageNo:pageNum
       })
     }
   }
@@ -68,7 +69,7 @@ export default class home extends React.Component {
       this.getLists() 
     }else if(prevState.sort !== this.state.sort){
       this.getLists() 
-    }else if(prevState.page !== this.state.page){
+    }else if(prevState.pageNo !== this.state.pageNo){
       this.getLists() 
     }
   }
@@ -77,14 +78,16 @@ export default class home extends React.Component {
   async getLists(){
       let params = this.state.params
       let requestData = {
-        page:this.state.page,
+        pageNo:this.state.pageNo,
+        pageSize:this.state.pageSize,
+        type:1,//文章
         category: params.category?params.category:null,//分类ID
         tag: params.tag?params.tag:null, //二级分类标签ID
         sort:this.state.sort //排序
       }
       let data = await getList(requestData);
       this.setState({
-        list:this.state.list.concat(data.data.list)
+        list:this.state.list.concat(data.data)
       })
   }
 
@@ -92,7 +95,7 @@ export default class home extends React.Component {
   setSort(code = 'recommended'){
     this.setState({
       sort:code,
-      page:1,
+      pageNo:1,
       list:[]
     })
   }
@@ -125,22 +128,22 @@ export default class home extends React.Component {
   render() {
     // 列表数据
     let itemLists = this.state.list.map((item,index)=>{
-      let tagText = ''
-      item.tags.forEach((v)=>{
-        tagText+=v.title
-      })
+      // let tagText = ''
+      // item.tags.forEach((v)=>{
+      //   tagText+=v.title
+      // })
 
       return (
         <div className={indexStyles.item} key={index}>
             <div className={indexStyles.infoBox}>
               <div className={indexStyles.hint}>
-                <span style={{color:'#b71ed7'}}>{item.hot?'推荐':''}</span>
+                <span style={{color:'#b71ed7'}}>{item.recommended === 1?'推荐':''}</span>
                 <span className={indexStyles.segment}>.</span>
-                <span className={indexStyles.name}>{item.user.name}</span>
+                <span className={indexStyles.name}>{item.name}</span>
                 <span className={indexStyles.segment}>.</span>
-                <span>{item.createdAt}</span>
+                <span>{item.creationTime}</span>
                 <span className={indexStyles.segment}>.</span>
-                <span>{tagText}</span>
+                <span>{item.cname}/{item.tagName}</span>
               </div>
               <div className={`text-line ${indexStyles.title}`}>
                   {item.title}

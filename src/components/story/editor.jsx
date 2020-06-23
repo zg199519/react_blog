@@ -4,9 +4,9 @@ import { Button , Popover , Input , Tag , Tooltip , Upload, Modal} from 'antd';
 import { SmileOutlined , PictureOutlined , LinkOutlined , NumberOutlined , PlusOutlined } from '@ant-design/icons';
 import Emojis from '@/components/story/emojis'
 import Topic from '@/components/story/topic'
-import { getBase64 , addSplitToField } from '@/utils/common'
+import { getBase64 , pasteHtmlAtCaret } from '@/utils/common'
 
-function Editor (){
+function Editor (props){
 
     const maxCount = 1000;//最大数量
     const maxFile = 8;//允许上传最大数值
@@ -29,33 +29,34 @@ function Editor (){
 
     // 接收表情事件
     function receiveEmoji(data){
-        // addSplitToField(editorRef.current,'dsdss')
-       
-        console.log(data)
 
-        editorRef.current.innerHtml = "<p>This is<em>my</em>Content.</p>"
-
-
-        console.log(editorRef.current)
+        editorRef.current.focus()
+        pasteHtmlAtCaret(data) //添加元素
+        elementNumber(editorRef.current)
     }
 
     // 自定义点击上传
     function onFileUpload(){
         uploadRef.current.click()
+
     }
 
     // 编辑器事件
     function editorChange(e){
         // console.log(e.keyCode,e.ctrlKey,e.metaKey,e.shiftKey,e.target.innerText)
-
-        let text = e.target.innerText;//获取文本
-        let imgs = e.target.getElementsByTagName("img").length
-        if(e.shiftKey && e.keyCode === 16 && (count < 1000 && count > 0)){
+        elementNumber(e.target)
+        if(e.metaKey && e.shiftKey && e.keyCode === 16 && (count < 1000 && count > 0)){
             console.log('提交事件')
         }
-
-        setCount(maxCount-(text.length+imgs*2)) //计算剩余数量
+        
     }
+
+    // 计算元素剩余数量
+   function elementNumber(el){
+        let text = el.innerText;//获取文本
+        let imgs = el.getElementsByTagName("img").length
+        setCount(maxCount-(text.length+imgs*2)) //计算剩余数量
+   }
 
     // 点击图片
     async function previewImageFun(file){
@@ -84,7 +85,7 @@ function Editor (){
                         <div 
                         ref={editorRef}
                         suppressContentEditableWarning
-                        onKeyDown={editorChange}
+                        // onKeyDown={editorChange}
                         onKeyUp={editorChange}
                         className={styles.document} 
                         contentEditable="true" 
@@ -134,8 +135,7 @@ function Editor (){
                                     </Tooltip>
                                 ):''
                             }
-   
-                            
+
                         </div>
                 </div>
             </div>
