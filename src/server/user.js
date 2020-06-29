@@ -1,12 +1,12 @@
-import request from './request'
+import request from './request';
 
 // 获取会员个人信息
 export function getUserInfo(data = {}) {
-    return request({
-      url: '/api/user/info',
-      method: 'get',
-      params: data
-    })
+  return request({
+    url: '/api/user/info',
+    method: 'get',
+    params: data,
+  });
 }
 
 // 获取会员统计信息
@@ -14,15 +14,15 @@ export function getUserStatistical(data = {}) {
   return request({
     url: '/api/user/statistical',
     method: 'get',
-    params: data
-  })
+    params: data,
+  });
 }
 
 // 获取作者排行榜
 export function getAuthorList(data = {}) {
   return request({
-    url: '/api/author/lists',
+    url: '/api/user/author_list',
     method: 'get',
-    params: data
-  })
+    params: data,
+  });
 }

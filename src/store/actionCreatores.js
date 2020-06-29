@@ -1,6 +1,7 @@
-import { TEST_A }  from './actionTypes'
+import { TEST_A } from './actionTypes';
 
-export const addDataAction = (value)=>({
-    type:TEST_A,
-    value
-})
+// 改变头部显示和隐藏状态
+export const changeHeaderState = value => ({
+  type: TEST_A,
+  value,
+});

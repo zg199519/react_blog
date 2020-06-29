@@ -1,16 +1,16 @@
-import { TEST_A }  from './actionTypes'
+import { TEST_A } from './actionTypes';
 
 const initializeState = {
-    filterCategory:{
-        categoryId:null,//默认是全部
-        tagId:null//标签ID
-    }
-}  
-export default (state = initializeState,action)=>{  //就是一个方法函数
-    
-    if(action.type === TEST_A){
-        console.log(action)
-    }
+  headerShow: true, //是否显示头部
+};
+export default (state = initializeState, action) => {
+  //就是一个方法函数
+  // 改变头部显示状态
+  if (action.type === TEST_A) {
+    let newState = JSON.parse(JSON.stringify(state)); //深度拷贝state
+    newState.headerShow = action.value;
+    return newState;
+  }
 
-    return state
-}
+  return state;
+};

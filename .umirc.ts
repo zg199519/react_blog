@@ -5,65 +5,61 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { 
-      path: '/', 
-      component: '@/pages/app' ,
+    {
+      path: '/',
+      component: '@/pages/app',
       routes: [
         // 负责跳转
         {
           path: '/',
           redirect: '/home',
         },
+        // 编辑器
+        {
+          path: '/editor',
+          name: '编辑器',
+          component: '@/pages/editor/index',
+          headerShow: false,
+          title: '编辑器',
+        },
         {
           path: '/home/:category?/:tag?',
           name: '首页',
           component: '@/pages/home/index',
-          meta: {
-            title: '首页',
-          },
+          title: '首页',
         },
         {
           path: '/tutorial/:category?',
           name: '教程',
           component: '@/pages/tutorial/index',
-          meta: {
-            title: '教程',
-          },
+          title: '教程',
         },
         {
-          path: '/story/:category?',
+          path: '/story/:topicId?',
           name: '帖子',
           component: '@/pages/story/index',
-          meta: {
-            title: '帖子',
-          },
+          title: '帖子',
         },
         {
           path: '/activity',
           name: '活动',
           component: '@/pages/activity/index',
-          meta: {
-            title: '活动',
-          },
+          title: '活动',
         },
-
-      ]
-  
-  
+      ],
     },
   ],
   //全局环境配置
   define: {
-    API_BASE_URL: (process.env.NODE_ENV === 'development')?'/api':'http://127.0.0.1:7001',
+    API_BASE_URL:
+      process.env.NODE_ENV === 'development' ? '/api' : 'http://127.0.0.1:7001',
   },
   // 代理配置
   proxy: {
     '/api': {
-      'target': 'http://127.0.0.1:7001',
-      'changeOrigin': true,
-      'pathRewrite': { '^/api' : '' },
+      target: 'http://127.0.0.1:7001',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '' },
     },
   },
-
-
 });
