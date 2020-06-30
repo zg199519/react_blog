@@ -25,7 +25,7 @@ export default class home extends React.Component {
       list: [], //数据集合
       finished: false, //是否处于下拉刷新
       params: { category: undefined, tag: undefined }, //路由参数category: null, tag: null
-      sort: 'recommended', //排序 默认是推荐
+      sort: 'newest', //排序 默认是推荐
     };
     this.setSort = this.setSort.bind(this);
   }
@@ -40,7 +40,7 @@ export default class home extends React.Component {
         pageNo: 1,
         list: [],
         params: nextProps.match.params,
-        sort: 'recommended',
+        sort: 'newest',
       };
     } else {
       return null;
@@ -106,7 +106,7 @@ export default class home extends React.Component {
   }
 
   // 更改排序规则
-  setSort(code = 'recommended') {
+  setSort(code = 'newest') {
     if (code !== this.state.sort) {
       this.setState({
         sort: code,

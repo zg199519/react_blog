@@ -8,3 +8,12 @@ export function getList(data = {}) {
     data,
   });
 }
+
+// 获取我的小册列表
+export function getMyList(data = {}) {
+  return request({
+    url: '/api/home/myBookList',
+    method: 'post',
+    data,
+  });
+}

@@ -17,10 +17,18 @@ export default defineConfig({
         // 编辑器
         {
           path: '/editor',
-          name: '编辑器',
+          name: '写文章',
           component: '@/pages/editor/index',
           headerShow: false,
-          title: '编辑器',
+          title: '写文章',
+        },
+        // 写小册
+        {
+          path: '/editor_book/:bookId?/:articleId?',
+          name: '写小册',
+          component: '@/pages/editor/book',
+          headerShow: false,
+          title: '写小册',
         },
         {
           path: '/home/:category?/:tag?',

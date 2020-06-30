@@ -1,4 +1,104 @@
 .editor {
-  // height: 100vh;
-  // overflow: hidden;
+}
+.editorBook {
+  display: flex;
+  .nav {
+    flex: 0 auto;
+    width: 200px;
+    height: 100vh;
+    overflow-y: scroll;
+    background-color: #ffffff;
+    color: #444444;
+    // padding: 0 20px;
+    display: flex;
+    flex-flow: column;
+    .articleLists {
+      flex: 1;
+    }
+  }
+  .rightNav {
+    // padding-left: 10px;
+    border-left: 1px solid #ddd;
+  }
+  .content {
+    flex: 1;
+  }
+  .bookLists {
+    flex: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    .noneBg {
+      flex: 0 auto;
+      list-style: none;
+      height: 46px;
+      padding: 0 16px;
+      line-height: 46px;
+      cursor: pointer;
+    }
+    ul {
+      flex: 1;
+      list-style: none;
+      padding: 0;
+      position: relative;
+      overflow-y: auto;
+      li {
+        height: 46px;
+        font-size: 14px;
+        line-height: 46px;
+        padding: 0 16px;
+        cursor: pointer;
+        transition: all 0.5s;
+        // .name{
+        //   padding-left: 10px;
+        // }
+      }
+      li:hover {
+        background-color: #1890ff;
+        color: #ffffff;
+      }
+      li.noneBg:hover {
+        background-color: #ffffff;
+        color: #444444;
+      }
+      .title {
+        display: flex;
+        .leftName {
+          flex: 1;
+          padding-right: 10px;
+        }
+        .setUp {
+          flex: 0 auto;
+          display: none;
+        }
+        .delete {
+          flex: 0 auto;
+          display: block;
+        }
+      }
+      .title.active {
+        background-color: #1890ff;
+        color: #ffffff;
+        .setUp {
+          display: block;
+        }
+        .delete {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.uploadCover {
+  width: 120px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+.avatarUploader {
+  width: 120px;
+  height: 180px;
 }

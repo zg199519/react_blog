@@ -74,7 +74,9 @@ export default class HeaderTop extends React.Component {
         </Menu.Item>
         <Menu.Item disabled>发布帖子</Menu.Item>
         <Menu.Divider />
-        <Menu.Item disabled>写教程</Menu.Item>
+        <Menu.Item disabled>
+          <Link to="/editor_book">写教程</Link>
+        </Menu.Item>
       </Menu>
     );
 
@@ -100,7 +102,7 @@ export default class HeaderTop extends React.Component {
                   >
                     <Menu.Item key="post">
                       {' '}
-                      <Link to="/">技术贴</Link>{' '}
+                      <Link to="/">文章</Link>{' '}
                     </Menu.Item>
                     <Menu.Item key="story">
                       <Link to="/story"> 帖子 </Link>{' '}
